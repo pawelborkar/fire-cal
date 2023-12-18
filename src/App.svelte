@@ -2,17 +2,18 @@
   import { onMount } from "svelte";
   import "tailwindcss/tailwind.css";
 
-  let principalAmount = 1000000;
-  let annualROI = 7.0;
+  let principalAmount = 50000000;
+  let annualROI = 10.0;
   let numYears = 40;
-  let yearlyExpense = 20000;
-  let inflationRate = 3.0;
+  let totalYearlyExpense = 1200000;
+  let inflationRate = 4.0;
   let selectedCurrency = "INR";
   let results = [];
 
   const calculateResults = () => {
     results = [];
     let totalAmount = principalAmount;
+    let yearlyExpense = totalYearlyExpense;
 
     for (let year = 1; year <= numYears; year++) {
       yearlyExpense *= 1 + inflationRate / 100.0;
@@ -64,7 +65,7 @@
 
   <label>
     Yearly Expense:
-    <input type="number" bind:value={yearlyExpense} />
+    <input type="number" bind:value={totalYearlyExpense} />
   </label>
 
   <label>
