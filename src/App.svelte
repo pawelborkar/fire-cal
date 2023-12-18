@@ -44,7 +44,7 @@
 
 <main>
   <hr />
-  <h1>F.I.R.E Calculator</h1>
+  <h1>FIRE Calculator</h1>
   <hr />
   <br />
   <label>
