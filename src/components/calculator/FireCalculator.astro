@@ -1,0 +1,1719 @@
+---
+import { PRESETS, CURRENCIES } from '../../lib/formatters';
+---
+
+<section id="calculator" class="calculator-section">
+  <div class="container">
+    <!-- Preset Shortcuts Bar -->
+    <div class="presets-container glass-panel">
+      <div class="presets-header">
+        <span class="presets-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Quick Presets:
+        </span>
+        <div class="currency-picker-wrap">
+          <label for="currency-select" class="sr-only">Currency</label>
+          <select id="currency-select" class="currency-select" aria-label="Select Currency">
+            {Object.values(CURRENCIES).map((c) => (
+              <option value={c.code}>
+                {c.symbol} {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div class="presets-list" role="tablist" aria-label="Investment Scenarios">
+        {PRESETS.map((preset, idx) => (
+          <button
+            type="button"
+            class={`preset-pill ${idx === 0 ? 'active' : ''}`}
+            data-preset-id={preset.id}
+            data-roi={preset.roi}
+            data-inflation={preset.inflation}
+            data-years={preset.years}
+            data-swr={preset.swr}
+            title={preset.description}
+          >
+            {preset.name}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Calculator Grid -->
+    <div class="calculator-layout">
+      <!-- Input Controls Column -->
+      <div class="inputs-card glass-panel-elevated">
+        <div class="card-title-row">
+          <h2 class="card-title font-display">Calculator Inputs</h2>
+          <div class="action-buttons">
+            <button id="btn-share" type="button" class="btn-icon" title="Copy shareable link with current inputs" aria-label="Share">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span class="btn-text">Share</span>
+            </button>
+            <button id="btn-reset" type="button" class="btn-icon" title="Reset all inputs to default" aria-label="Reset">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span class="btn-text">Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <form id="fire-form" class="inputs-form" onsubmit="return false;">
+          <!-- Principal Amount -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="input-principal" class="input-label">
+                Current Portfolio / Net Worth
+              </label>
+              <span id="principal-badge" class="unit-badge">₹5.00 Cr</span>
+            </div>
+            <div class="input-with-symbol">
+              <span class="currency-symbol-addon" id="currency-addon-1">₹</span>
+              <input
+                type="number"
+                id="input-principal"
+                class="input-field input-with-addon"
+                min="0"
+                step="100000"
+                value="50000000"
+                aria-describedby="principal-badge"
+              />
+            </div>
+            <span class="input-helper">Your existing accumulated invested corpus</span>
+          </div>
+
+          <!-- Annual Living Expenses -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="input-expenses" class="input-label">
+                Annual Living Expenses
+              </label>
+              <span id="expenses-badge" class="unit-badge">₹12.00 Lakh / yr</span>
+            </div>
+            <div class="input-with-symbol">
+              <span class="currency-symbol-addon" id="currency-addon-2">₹</span>
+              <input
+                type="number"
+                id="input-expenses"
+                class="input-field input-with-addon"
+                min="0"
+                step="50000"
+                value="1200000"
+                aria-describedby="expenses-badge"
+              />
+            </div>
+            <span class="input-helper">Current yearly spending required in retirement</span>
+          </div>
+
+          <!-- Expected Annual Return (ROI) -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="range-roi" class="input-label">
+                Expected Annual Return (ROI)
+              </label>
+              <span id="roi-value-display" class="highlight-val tabular-nums">10.0%</span>
+            </div>
+            <div class="range-and-number">
+              <input
+                type="range"
+                id="range-roi"
+                min="1"
+                max="25"
+                step="0.1"
+                value="10.0"
+                aria-label="Expected Annual Return slider"
+              />
+              <input
+                type="number"
+                id="input-roi"
+                class="input-field input-compact"
+                min="1"
+                max="25"
+                step="0.1"
+                value="10.0"
+                aria-label="Expected Annual Return numeric"
+              />
+            </div>
+            <span class="input-helper">Nominal portfolio growth rate (equity + debt weighted blend)</span>
+          </div>
+
+          <!-- Expected Inflation Rate -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="range-inflation" class="input-label">
+                Expected Annual Inflation
+              </label>
+              <span id="inflation-value-display" class="highlight-val tabular-nums">6.0%</span>
+            </div>
+            <div class="range-and-number">
+              <input
+                type="range"
+                id="range-inflation"
+                min="0"
+                max="15"
+                step="0.1"
+                value="6.0"
+                aria-label="Expected Annual Inflation slider"
+              />
+              <input
+                type="number"
+                id="input-inflation"
+                class="input-field input-compact"
+                min="0"
+                max="15"
+                step="0.1"
+                value="6.0"
+                aria-label="Expected Annual Inflation numeric"
+              />
+            </div>
+            <span class="input-helper">Rate at which living expenses compound over time</span>
+          </div>
+
+          <!-- Number of Years -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="range-years" class="input-label">
+                Retirement Horizon
+              </label>
+              <span id="years-value-display" class="highlight-val tabular-nums">40 Years</span>
+            </div>
+            <div class="range-and-number">
+              <input
+                type="range"
+                id="range-years"
+                min="5"
+                max="60"
+                step="1"
+                value="40"
+                aria-label="Retirement Horizon slider"
+              />
+              <input
+                type="number"
+                id="input-years"
+                class="input-field input-compact"
+                min="5"
+                max="60"
+                step="1"
+                value="40"
+                aria-label="Retirement Horizon numeric"
+              />
+            </div>
+            <span class="input-helper">Number of years your portfolio must sustain withdrawals</span>
+          </div>
+
+          <!-- Safe Withdrawal Rate (SWR) -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="range-swr" class="input-label">
+                Safe Withdrawal Rate (SWR)
+              </label>
+              <span id="swr-value-display" class="highlight-val tabular-nums">4.0% (25x)</span>
+            </div>
+            <div class="range-and-number">
+              <input
+                type="range"
+                id="range-swr"
+                min="2.5"
+                max="6.0"
+                step="0.1"
+                value="4.0"
+                aria-label="Safe Withdrawal Rate slider"
+              />
+              <input
+                type="number"
+                id="input-swr"
+                class="input-field input-compact"
+                min="2.5"
+                max="6.0"
+                step="0.1"
+                value="4.0"
+                aria-label="Safe Withdrawal Rate numeric"
+              />
+            </div>
+            <div class="swr-chips">
+              <button type="button" class="swr-chip" data-swr="3.0">3.0% (33x)</button>
+              <button type="button" class="swr-chip" data-swr="3.5">3.5% (28.6x)</button>
+              <button type="button" class="swr-chip active" data-swr="4.0">4.0% (25x)</button>
+              <button type="button" class="swr-chip" data-swr="4.5">4.5% (22.2x)</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Live Results & Projections Column -->
+      <div class="results-column">
+        <!-- Live Dynamic Sustainability Status Banner -->
+        <div id="status-banner" class="status-banner glass-panel">
+          <div class="status-indicator-wrap">
+            <span id="status-icon" class="status-icon">🔥</span>
+          </div>
+          <div class="status-meta">
+            <h3 id="status-title" class="status-title font-display">Perpetual Portfolio</h3>
+            <p id="status-desc" class="status-desc">
+              Your investment returns comfortably outpace inflation and withdrawals. Your portfolio lasts the full 40-year horizon.
+            </p>
+          </div>
+          <div id="status-pill" class="badge-pill badge-success status-badge">
+            Sustains 40+ Years
+          </div>
+        </div>
+
+        <!-- Metric Highlight Cards (6 Cards) -->
+        <div class="metrics-grid">
+          <!-- Card 1: FIRE Target Corpus -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Target FIRE Corpus</span>
+            <div class="metric-value-row">
+              <span id="metric-target-corpus" class="metric-value text-gradient tabular-nums">₹3.00 Cr</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div id="metric-progress-bar" class="progress-bar-fill" style="width: 100%;"></div>
+            </div>
+            <span id="metric-funded-text" class="metric-subtext">167% of target funded</span>
+          </div>
+
+          <!-- Card 2: Portfolio Longevity -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Portfolio Longevity</span>
+            <div class="metric-value-row">
+              <span id="metric-longevity" class="metric-value tabular-nums">40+ Years</span>
+            </div>
+            <span id="metric-longevity-subtext" class="metric-subtext text-emerald">✨ Zero depletion risk</span>
+          </div>
+
+          <!-- Card 3: Final Portfolio Value -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Final Balance (Year 40)</span>
+            <div class="metric-value-row">
+              <span id="metric-final-val" class="metric-value tabular-nums">₹12.45 Cr</span>
+            </div>
+            <span id="metric-final-subtext" class="metric-subtext">Nominal value at end of horizon</span>
+          </div>
+
+          <!-- Card 4: Peak Net Worth -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Peak Net Worth</span>
+            <div class="metric-value-row">
+              <span id="metric-peak-val" class="metric-value tabular-nums">₹14.20 Cr</span>
+            </div>
+            <span id="metric-peak-year" class="metric-subtext">Achieved in Year 28</span>
+          </div>
+
+          <!-- Card 5: Total Lifetime Withdrawals -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Total Withdrawals</span>
+            <div class="metric-value-row">
+              <span id="metric-withdrawals" class="metric-value tabular-nums">₹8.70 Cr</span>
+            </div>
+            <span class="metric-subtext">Cumulative spending funded</span>
+          </div>
+
+          <!-- Card 6: Total Compounded Gains -->
+          <div class="metric-card glass-panel">
+            <span class="metric-label">Total Compounded Gains</span>
+            <div class="metric-value-row">
+              <span id="metric-gains" class="metric-value tabular-nums">₹16.15 Cr</span>
+            </div>
+            <span class="metric-subtext">Growth generated by market ROI</span>
+          </div>
+        </div>
+
+        <!-- View Navigation Tabs -->
+        <div id="visualizer" class="tabs-nav-bar glass-panel">
+          <div class="tabs-list" role="tablist">
+            <button type="button" class="tab-btn active" data-tab="chart" role="tab" aria-selected="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span>Visual Trajectory</span>
+            </button>
+            <button type="button" class="tab-btn" data-tab="milestones" role="tab" aria-selected="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+              <span>FIRE Targets</span>
+            </button>
+            <button type="button" class="tab-btn" data-tab="table" role="tab" aria-selected="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+              </svg>
+              <span>Year-by-Year Table</span>
+            </button>
+          </div>
+          <div class="tab-actions">
+            <button id="btn-export-csv" type="button" class="btn-secondary" title="Export compounding table to CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 1: Interactive Chart Visualizer -->
+        <div id="tab-chart" class="tab-panel active glass-panel">
+          <div class="chart-header">
+            <div class="chart-legends">
+              <div class="legend-item">
+                <span class="legend-color-dot dot-portfolio"></span>
+                <span>Portfolio Balance</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color-dot dot-expenses"></span>
+                <span>Inflation-Adjusted Expenses</span>
+              </div>
+            </div>
+            <div id="chart-scrub-info" class="chart-scrub-info tabular-nums">
+              Hover over chart to inspect any year
+            </div>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="fire-chart" width="800" height="340" aria-label="FIRE Portfolio Trajectory Chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Tab 2: FIRE Targets & Milestones -->
+        <div id="tab-milestones" class="tab-panel glass-panel">
+          <div class="milestones-grid">
+            <div class="milestone-box">
+              <div class="milestone-header">
+                <span class="milestone-title">Lean FIRE (75%)</span>
+                <span id="milestone-lean-badge" class="badge-pill">75% Expenses</span>
+              </div>
+              <span id="milestone-lean-val" class="milestone-corpus text-gradient tabular-nums">₹2.25 Cr</span>
+              <p class="milestone-desc">Covers minimalist essentials, eliminating discretionary luxuries.</p>
+            </div>
+
+            <div class="milestone-box active-target">
+              <div class="milestone-header">
+                <span class="milestone-title">Standard FIRE (100%)</span>
+                <span class="badge-pill badge-fire">Your Goal</span>
+              </div>
+              <span id="milestone-std-val" class="milestone-corpus text-gradient tabular-nums">₹3.00 Cr</span>
+              <p class="milestone-desc">Sustains your full current standard of living perpetually.</p>
+            </div>
+
+            <div class="milestone-box">
+              <div class="milestone-header">
+                <span class="milestone-title">Fat FIRE (150%)</span>
+                <span class="badge-pill">Abundant Lifestyle</span>
+              </div>
+              <span id="milestone-fat-val" class="milestone-corpus text-gradient tabular-nums">₹4.50 Cr</span>
+              <p class="milestone-desc">Includes generous discretionary buffer for luxury and travel.</p>
+            </div>
+
+            <div class="milestone-box">
+              <div class="milestone-header">
+                <span class="milestone-title">Barista FIRE (50%)</span>
+                <span class="badge-pill">Semi-Retirement</span>
+              </div>
+              <span id="milestone-barista-val" class="milestone-corpus text-gradient tabular-nums">₹1.50 Cr</span>
+              <p class="milestone-desc">Portfolio covers 50% of living expenses; part-time work covers the rest.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Year-by-Year Compounding Table -->
+        <div id="tab-table" class="tab-panel glass-panel">
+          <div class="table-container">
+            <table id="results-table" class="results-table">
+              <thead>
+                <tr>
+                  <th scope="col">Year</th>
+                  <th scope="col">Starting Balance</th>
+                  <th scope="col">Investment Gains</th>
+                  <th scope="col">Living Expense</th>
+                  <th scope="col">Ending Balance</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification for Share / Copy -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    Link copied to clipboard!
+  </div>
+</section>
+
+<script>
+  import { calculateFireProjections } from '../../lib/calculator';
+  import { formatCompactCurrency, formatFullCurrency, PRESETS, CURRENCIES } from '../../lib/formatters';
+  import type { CurrencyCode } from '../../lib/types';
+
+  // State
+  let state = {
+    principal: 50000000,
+    expenses: 1200000,
+    roi: 10.0,
+    inflation: 6.0,
+    years: 40,
+    swr: 4.0,
+    currency: 'INR' as CurrencyCode,
+  };
+
+  // Elements
+  const el = {
+    principalInput: document.getElementById('input-principal') as HTMLInputElement,
+    principalBadge: document.getElementById('principal-badge') as HTMLElement,
+    expensesInput: document.getElementById('input-expenses') as HTMLInputElement,
+    expensesBadge: document.getElementById('expenses-badge') as HTMLElement,
+    
+    rangeRoi: document.getElementById('range-roi') as HTMLInputElement,
+    inputRoi: document.getElementById('input-roi') as HTMLInputElement,
+    roiDisplay: document.getElementById('roi-value-display') as HTMLElement,
+    
+    rangeInflation: document.getElementById('range-inflation') as HTMLInputElement,
+    inputInflation: document.getElementById('input-inflation') as HTMLInputElement,
+    inflationDisplay: document.getElementById('inflation-value-display') as HTMLElement,
+    
+    rangeYears: document.getElementById('range-years') as HTMLInputElement,
+    inputYears: document.getElementById('input-years') as HTMLInputElement,
+    yearsDisplay: document.getElementById('years-value-display') as HTMLElement,
+    
+    rangeSwr: document.getElementById('range-swr') as HTMLInputElement,
+    inputSwr: document.getElementById('input-swr') as HTMLInputElement,
+    swrDisplay: document.getElementById('swr-value-display') as HTMLElement,
+
+    currencySelect: document.getElementById('currency-select') as HTMLSelectElement,
+    currencyAddon1: document.getElementById('currency-addon-1') as HTMLElement,
+    currencyAddon2: document.getElementById('currency-addon-2') as HTMLElement,
+
+    // Status Banner
+    statusBanner: document.getElementById('status-banner') as HTMLElement,
+    statusIcon: document.getElementById('status-icon') as HTMLElement,
+    statusTitle: document.getElementById('status-title') as HTMLElement,
+    statusDesc: document.getElementById('status-desc') as HTMLElement,
+    statusPill: document.getElementById('status-pill') as HTMLElement,
+
+    // Metrics
+    metricTargetCorpus: document.getElementById('metric-target-corpus') as HTMLElement,
+    metricProgressBar: document.getElementById('metric-progress-bar') as HTMLElement,
+    metricFundedText: document.getElementById('metric-funded-text') as HTMLElement,
+    metricLongevity: document.getElementById('metric-longevity') as HTMLElement,
+    metricLongevitySubtext: document.getElementById('metric-longevity-subtext') as HTMLElement,
+    metricFinalVal: document.getElementById('metric-final-val') as HTMLElement,
+    metricFinalSubtext: document.getElementById('metric-final-subtext') as HTMLElement,
+    metricPeakVal: document.getElementById('metric-peak-val') as HTMLElement,
+    metricPeakYear: document.getElementById('metric-peak-year') as HTMLElement,
+    metricWithdrawals: document.getElementById('metric-withdrawals') as HTMLElement,
+    metricGains: document.getElementById('metric-gains') as HTMLElement,
+
+    // Milestones
+    milestoneLeanVal: document.getElementById('milestone-lean-val') as HTMLElement,
+    milestoneStdVal: document.getElementById('milestone-std-val') as HTMLElement,
+    milestoneFatVal: document.getElementById('milestone-fat-val') as HTMLElement,
+    milestoneBaristaVal: document.getElementById('milestone-barista-val') as HTMLElement,
+
+    // Table
+    tableBody: document.getElementById('table-body') as HTMLElement,
+
+    // Chart
+    canvas: document.getElementById('fire-chart') as HTMLCanvasElement,
+    chartScrubInfo: document.getElementById('chart-scrub-info') as HTMLElement,
+
+    // Buttons
+    btnShare: document.getElementById('btn-share') as HTMLButtonElement,
+    btnReset: document.getElementById('btn-reset') as HTMLButtonElement,
+    btnExportCsv: document.getElementById('btn-export-csv') as HTMLButtonElement,
+    toast: document.getElementById('toast') as HTMLElement,
+  };
+
+  let currentProjections: any[] = [];
+
+  // Parse state from URL params if present
+  function loadInitialState() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('p')) state.principal = Math.max(0, parseFloat(params.get('p')!) || state.principal);
+      if (params.has('e')) state.expenses = Math.max(0, parseFloat(params.get('e')!) || state.expenses);
+      if (params.has('roi')) state.roi = Math.max(0, parseFloat(params.get('roi')!) || state.roi);
+      if (params.has('inf')) state.inflation = Math.max(0, parseFloat(params.get('inf')!) || state.inflation);
+      if (params.has('y')) state.years = Math.max(1, parseInt(params.get('y')!, 10) || state.years);
+      if (params.has('swr')) state.swr = Math.max(1, parseFloat(params.get('swr')!) || state.swr);
+      if (params.has('c') && CURRENCIES[params.get('c') as CurrencyCode]) {
+        state.currency = params.get('c') as CurrencyCode;
+      } else {
+        // Fallback to localStorage if available
+        const saved = localStorage.getItem('fire_cal_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+        }
+      }
+    } catch (e) {
+      console.warn('Could not load URL state', e);
+    }
+    syncUiInputs();
+  }
+
+  function syncUiInputs() {
+    el.principalInput.value = state.principal.toString();
+    el.expensesInput.value = state.expenses.toString();
+    
+    el.rangeRoi.value = state.roi.toString();
+    el.inputRoi.value = state.roi.toString();
+    
+    el.rangeInflation.value = state.inflation.toString();
+    el.inputInflation.value = state.inflation.toString();
+    
+    el.rangeYears.value = state.years.toString();
+    el.inputYears.value = state.years.toString();
+    
+    el.rangeSwr.value = state.swr.toString();
+    el.inputSwr.value = state.swr.toString();
+
+    el.currencySelect.value = state.currency;
+    const symbol = CURRENCIES[state.currency]?.symbol || '₹';
+    el.currencyAddon1.textContent = symbol;
+    el.currencyAddon2.textContent = symbol;
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem('fire_cal_state', JSON.stringify(state));
+    } catch (e) {
+      // localStorage might be disabled
+    }
+  }
+
+  function showToast(message: string) {
+    if (!el.toast) return;
+    el.toast.textContent = message;
+    el.toast.classList.add('show');
+    setTimeout(() => {
+      el.toast.classList.remove('show');
+    }, 2800);
+  }
+
+  function runCalculations() {
+    const { projections, summary } = calculateFireProjections({
+      principalAmount: state.principal,
+      annualROI: state.roi,
+      numYears: state.years,
+      totalYearlyExpense: state.expenses,
+      inflationRate: state.inflation,
+      selectedCurrency: state.currency,
+      swrRate: state.swr,
+    });
+
+    currentProjections = projections;
+
+    // Update Input Badges
+    el.principalBadge.textContent = formatCompactCurrency(state.principal, state.currency);
+    el.expensesBadge.textContent = `${formatCompactCurrency(state.expenses, state.currency)} / yr`;
+    el.roiDisplay.textContent = `${state.roi.toFixed(1)}%`;
+    el.inflationDisplay.textContent = `${state.inflation.toFixed(1)}%`;
+    el.yearsDisplay.textContent = `${state.years} Years`;
+    const multiple = (100 / (state.swr || 4)).toFixed(1);
+    el.swrDisplay.textContent = `${state.swr.toFixed(1)}% (${multiple}x)`;
+
+    // Update Sustainability Status
+    if (summary.isPerpetual) {
+      el.statusBanner.className = 'status-banner glass-panel banner-sustainable';
+      el.statusIcon.textContent = '🔥';
+      el.statusTitle.textContent = 'Perpetual Portfolio • Sustains 100%';
+      el.statusDesc.textContent = `Your portfolio grows and safely outlives your ${state.years}-year horizon with a closing surplus of ${formatCompactCurrency(summary.finalPortfolioValue, state.currency)}.`;
+      el.statusPill.className = 'badge-pill badge-success status-badge';
+      el.statusPill.textContent = `Sustains ${state.years}+ Years`;
+    } else if (summary.yearsSustained >= state.years) {
+      el.statusBanner.className = 'status-banner glass-panel banner-solvent';
+      el.statusIcon.textContent = '🛡️';
+      el.statusTitle.textContent = 'Solvent Through Full Horizon';
+      el.statusDesc.textContent = `Your portfolio funds all ${state.years} years of expenses, closing at ${formatCompactCurrency(summary.finalPortfolioValue, state.currency)}.`;
+      el.statusPill.className = 'badge-pill badge-warning status-badge';
+      el.statusPill.textContent = `Fully Funded for ${state.years} Yrs`;
+    } else {
+      el.statusBanner.className = 'status-banner glass-panel banner-depleted';
+      el.statusIcon.textContent = '⚠️';
+      el.statusTitle.textContent = `Portfolio Depletes at Year ${summary.yearsSustained}`;
+      el.statusDesc.textContent = `Expenses and inflation exhaust the capital in Year ${summary.yearsSustained}. Increase your initial savings or reduce withdrawal expenses to bridge the gap.`;
+      el.statusPill.className = 'badge-pill badge-danger status-badge';
+      el.statusPill.textContent = `Runs Out in Year ${summary.yearsSustained}`;
+    }
+
+    // Update Metrics
+    el.metricTargetCorpus.textContent = formatCompactCurrency(summary.targetFireCorpus, state.currency);
+    const fundingPercent = summary.currentFundingPercent;
+    el.metricProgressBar.style.width = `${Math.min(100, fundingPercent)}%`;
+    el.metricProgressBar.className = fundingPercent >= 100 ? 'progress-bar-fill progress-success' : 'progress-bar-fill';
+    el.metricFundedText.textContent = `${fundingPercent}% of target corpus funded`;
+
+    if (summary.yearsSustained >= state.years) {
+      el.metricLongevity.textContent = `${state.years}+ Years`;
+      el.metricLongevitySubtext.textContent = summary.isPerpetual ? '✨ Zero depletion risk' : '✅ Full horizon covered';
+      el.metricLongevitySubtext.className = 'metric-subtext text-emerald';
+    } else {
+      el.metricLongevity.textContent = `${summary.yearsSustained} Years`;
+      el.metricLongevitySubtext.textContent = `⚠️ Depletes before Year ${state.years}`;
+      el.metricLongevitySubtext.className = 'metric-subtext text-rose';
+    }
+
+    el.metricFinalVal.textContent = formatCompactCurrency(summary.finalPortfolioValue, state.currency);
+    el.metricFinalSubtext.textContent = `Nominal value in Year ${state.years}`;
+
+    el.metricPeakVal.textContent = formatCompactCurrency(summary.peakNetWorth, state.currency);
+    el.metricPeakYear.textContent = `Peak reached in Year ${summary.peakYear}`;
+
+    el.metricWithdrawals.textContent = formatCompactCurrency(summary.totalWithdrawn, state.currency);
+    el.metricGains.textContent = formatCompactCurrency(summary.totalGains, state.currency);
+
+    // Update Milestones
+    el.milestoneLeanVal.textContent = formatCompactCurrency(summary.leanFireCorpus, state.currency);
+    el.milestoneStdVal.textContent = formatCompactCurrency(summary.targetFireCorpus, state.currency);
+    el.milestoneFatVal.textContent = formatCompactCurrency(summary.fatFireCorpus, state.currency);
+    el.milestoneBaristaVal.textContent = formatCompactCurrency(summary.baristaFireCorpus, state.currency);
+
+    // Update Table
+    renderTable(projections);
+
+    // Update Canvas Chart
+    drawChart(projections);
+
+    // Save to local storage
+    saveState();
+  }
+
+  function renderTable(projections: any[]) {
+    if (!el.tableBody) return;
+    el.tableBody.innerHTML = '';
+
+    projections.forEach((p) => {
+      const tr = document.createElement('tr');
+      if (p.depleted) tr.className = 'row-depleted';
+
+      tr.innerHTML = `
+        <td class="tabular-nums font-semibold">Year ${p.year}</td>
+        <td class="tabular-nums">${formatCompactCurrency(p.startingAmount, state.currency)}</td>
+        <td class="tabular-nums text-emerald">+${formatCompactCurrency(p.yearlyGains, state.currency)}</td>
+        <td class="tabular-nums text-rose">-${formatCompactCurrency(p.yearlyExpense, state.currency)}</td>
+        <td class="tabular-nums font-semibold">${formatCompactCurrency(p.endingAmount, state.currency)}</td>
+        <td>
+          ${
+            p.depleted
+              ? `<span class="badge-pill badge-danger">Depleted</span>`
+              : `<span class="badge-pill badge-success">Solvent</span>`
+          }
+        </td>
+      `;
+      el.tableBody.appendChild(tr);
+    });
+  }
+
+  // Canvas Area Chart Rendering
+  function drawChart(projections: any[], hoverIndex: number | null = null) {
+    const canvas = el.canvas;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Handle high DPI
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { top: 20, right: 30, bottom: 40, left: 65 };
+    const chartW = width - padding.left - padding.right;
+    const chartH = height - padding.top - padding.bottom;
+
+    ctx.clearRect(0, 0, width, height);
+
+    if (projections.length === 0) return;
+
+    const maxVal = Math.max(
+      ...projections.map((p) => Math.max(p.endingAmount, p.yearlyExpense)),
+      state.principal
+    ) * 1.1;
+
+    const minVal = 0;
+
+    const getX = (index: number) => padding.left + (index / (projections.length - 1)) * chartW;
+    const getY = (val: number) => padding.top + chartH - ((val - minVal) / (maxVal - minVal || 1)) * chartH;
+
+    // Draw Grid Lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    ctx.lineWidth = 1;
+    const gridSteps = 4;
+    for (let i = 0; i <= gridSteps; i++) {
+      const val = minVal + (maxVal - minVal) * (i / gridSteps);
+      const y = getY(val);
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(padding.left + chartW, y);
+      ctx.stroke();
+
+      // Y-axis labels
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(formatCompactCurrency(val, state.currency), padding.left - 10, y + 4);
+    }
+
+    // X-axis Year labels
+    const yearStep = Math.max(1, Math.floor(projections.length / 6));
+    ctx.textAlign = 'center';
+    for (let i = 0; i < projections.length; i += yearStep) {
+      const x = getX(i);
+      ctx.fillText(`Yr ${projections[i].year}`, x, height - 12);
+    }
+
+    // Draw Area under Portfolio Curve
+    const areaGradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+    areaGradient.addColorStop(0, 'rgba(249, 115, 22, 0.35)');
+    areaGradient.addColorStop(0.7, 'rgba(249, 115, 22, 0.08)');
+    areaGradient.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+
+    ctx.beginPath();
+    ctx.moveTo(getX(0), getY(projections[0].endingAmount));
+    for (let i = 1; i < projections.length; i++) {
+      ctx.lineTo(getX(i), getY(projections[i].endingAmount));
+    }
+    ctx.lineTo(getX(projections.length - 1), getY(0));
+    ctx.lineTo(getX(0), getY(0));
+    ctx.closePath();
+    ctx.fillStyle = areaGradient;
+    ctx.fill();
+
+    // Draw Portfolio Stroke Line
+    ctx.beginPath();
+    ctx.moveTo(getX(0), getY(projections[0].endingAmount));
+    for (let i = 1; i < projections.length; i++) {
+      ctx.lineTo(getX(i), getY(projections[i].endingAmount));
+    }
+    ctx.strokeStyle = '#f97316';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Draw Yearly Expenses Line (Dashed)
+    ctx.beginPath();
+    ctx.setLineDash([4, 4]);
+    ctx.moveTo(getX(0), getY(projections[0].yearlyExpense));
+    for (let i = 1; i < projections.length; i++) {
+      ctx.lineTo(getX(i), getY(projections[i].yearlyExpense));
+    }
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+    ctx.setLineDash([]); // Reset line dash
+
+    // If Hover Scrubbing
+    if (hoverIndex !== null && hoverIndex >= 0 && hoverIndex < projections.length) {
+      const p = projections[hoverIndex];
+      const hx = getX(hoverIndex);
+      const hy = getY(p.endingAmount);
+
+      // Vertical guide line
+      ctx.beginPath();
+      ctx.moveTo(hx, padding.top);
+      ctx.lineTo(hx, padding.top + chartH);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Portfolio point dot
+      ctx.beginPath();
+      ctx.arc(hx, hy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.strokeStyle = '#f97316';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Update scrub info
+      el.chartScrubInfo.innerHTML = `
+        <span class="text-white font-semibold">Year ${p.year}:</span>
+        Balance: <span class="text-white font-semibold">${formatCompactCurrency(p.endingAmount, state.currency)}</span> • 
+        Expense: <span class="text-rose font-semibold">${formatCompactCurrency(p.yearlyExpense, state.currency)}</span> • 
+        Gains: <span class="text-emerald font-semibold">+${formatCompactCurrency(p.yearlyGains, state.currency)}</span>
+      `;
+    }
+  }
+
+  // Attach Input Event Listeners
+  function attachEventListeners() {
+    // Principal
+    el.principalInput?.addEventListener('input', (e) => {
+      state.principal = Math.max(0, parseFloat((e.target as HTMLInputElement).value) || 0);
+      runCalculations();
+    });
+
+    // Expenses
+    el.expensesInput?.addEventListener('input', (e) => {
+      state.expenses = Math.max(0, parseFloat((e.target as HTMLInputElement).value) || 0);
+      runCalculations();
+    });
+
+    // ROI Sync
+    el.rangeRoi?.addEventListener('input', (e) => {
+      state.roi = parseFloat((e.target as HTMLInputElement).value);
+      el.inputRoi.value = state.roi.toString();
+      runCalculations();
+    });
+    el.inputRoi?.addEventListener('input', (e) => {
+      state.roi = Math.max(0, parseFloat((e.target as HTMLInputElement).value) || 0);
+      el.rangeRoi.value = state.roi.toString();
+      runCalculations();
+    });
+
+    // Inflation Sync
+    el.rangeInflation?.addEventListener('input', (e) => {
+      state.inflation = parseFloat((e.target as HTMLInputElement).value);
+      el.inputInflation.value = state.inflation.toString();
+      runCalculations();
+    });
+    el.inputInflation?.addEventListener('input', (e) => {
+      state.inflation = Math.max(0, parseFloat((e.target as HTMLInputElement).value) || 0);
+      el.rangeInflation.value = state.inflation.toString();
+      runCalculations();
+    });
+
+    // Years Sync
+    el.rangeYears?.addEventListener('input', (e) => {
+      state.years = parseInt((e.target as HTMLInputElement).value, 10);
+      el.inputYears.value = state.years.toString();
+      runCalculations();
+    });
+    el.inputYears?.addEventListener('input', (e) => {
+      state.years = Math.max(1, parseInt((e.target as HTMLInputElement).value, 10) || 1);
+      el.rangeYears.value = state.years.toString();
+      runCalculations();
+    });
+
+    // SWR Sync
+    el.rangeSwr?.addEventListener('input', (e) => {
+      state.swr = parseFloat((e.target as HTMLInputElement).value);
+      el.inputSwr.value = state.swr.toString();
+      updateSwrChipActive();
+      runCalculations();
+    });
+    el.inputSwr?.addEventListener('input', (e) => {
+      state.swr = Math.max(0.5, parseFloat((e.target as HTMLInputElement).value) || 0.5);
+      el.rangeSwr.value = state.swr.toString();
+      updateSwrChipActive();
+      runCalculations();
+    });
+
+    // SWR quick chips
+    document.querySelectorAll('.swr-chip').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const swr = parseFloat(btn.getAttribute('data-swr') || '4.0');
+        state.swr = swr;
+        el.rangeSwr.value = swr.toString();
+        el.inputSwr.value = swr.toString();
+        updateSwrChipActive();
+        runCalculations();
+      });
+    });
+
+    // Currency Switcher
+    el.currencySelect?.addEventListener('change', (e) => {
+      state.currency = (e.target as HTMLSelectElement).value as CurrencyCode;
+      const symbol = CURRENCIES[state.currency]?.symbol || '₹';
+      el.currencyAddon1.textContent = symbol;
+      el.currencyAddon2.textContent = symbol;
+      runCalculations();
+    });
+
+    // Presets Click
+    document.querySelectorAll('.preset-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.preset-pill').forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        state.roi = parseFloat(pill.getAttribute('data-roi') || '10.0');
+        state.inflation = parseFloat(pill.getAttribute('data-inflation') || '6.0');
+        state.years = parseInt(pill.getAttribute('data-years') || '40', 10);
+        state.swr = parseFloat(pill.getAttribute('data-swr') || '4.0');
+
+        syncUiInputs();
+        updateSwrChipActive();
+        runCalculations();
+      });
+    });
+
+    // View Navigation Tabs
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tabKey = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('.tab-panel').forEach((panel) => panel.classList.remove('active'));
+        const targetPanel = document.getElementById(`tab-${tabKey}`);
+        if (targetPanel) targetPanel.classList.add('active');
+
+        if (tabKey === 'chart') {
+          drawChart(currentProjections);
+        }
+      });
+    });
+
+    // Chart Scrubbing / Hover
+    if (el.canvas) {
+      el.canvas.addEventListener('mousemove', (e) => {
+        const rect = el.canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const paddingLeft = 65;
+        const chartW = rect.width - paddingLeft - 30;
+
+        if (mouseX >= paddingLeft && mouseX <= paddingLeft + chartW && currentProjections.length > 1) {
+          const ratio = (mouseX - paddingLeft) / chartW;
+          const idx = Math.min(
+            currentProjections.length - 1,
+            Math.max(0, Math.round(ratio * (currentProjections.length - 1)))
+          );
+          drawChart(currentProjections, idx);
+        }
+      });
+
+      el.canvas.addEventListener('mouseleave', () => {
+        drawChart(currentProjections);
+        el.chartScrubInfo.textContent = 'Hover over chart to inspect any year';
+      });
+    }
+
+    // Share Button
+    el.btnShare?.addEventListener('click', () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set('p', state.principal.toString());
+      url.searchParams.set('e', state.expenses.toString());
+      url.searchParams.set('roi', state.roi.toString());
+      url.searchParams.set('inf', state.inflation.toString());
+      url.searchParams.set('y', state.years.toString());
+      url.searchParams.set('swr', state.swr.toString());
+      url.searchParams.set('c', state.currency);
+
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        showToast('Sharable calculation link copied!');
+      }).catch(() => {
+        showToast('Link copied: ' + url.toString());
+      });
+    });
+
+    // Reset Button
+    el.btnReset?.addEventListener('click', () => {
+      state = {
+        principal: 50000000,
+        expenses: 1200000,
+        roi: 10.0,
+        inflation: 6.0,
+        years: 40,
+        swr: 4.0,
+        currency: 'INR',
+      };
+      syncUiInputs();
+      updateSwrChipActive();
+      runCalculations();
+      showToast('Calculator reset to defaults');
+    });
+
+    // Export CSV
+    el.btnExportCsv?.addEventListener('click', () => {
+      if (!currentProjections || currentProjections.length === 0) return;
+      let csv = 'Year,Starting Balance,Investment Gains,Living Expenses,Ending Balance,Status\n';
+      currentProjections.forEach((p) => {
+        csv += `${p.year},${p.startingAmount.toFixed(0)},${p.yearlyGains.toFixed(0)},${p.yearlyExpense.toFixed(0)},${p.endingAmount.toFixed(0)},${p.depleted ? 'Depleted' : 'Solvent'}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `fire_projection_${state.currency}_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV downloaded successfully');
+    });
+
+    // Window Resize redraws chart
+    window.addEventListener('resize', () => {
+      drawChart(currentProjections);
+    });
+  }
+
+  function updateSwrChipActive() {
+    document.querySelectorAll('.swr-chip').forEach((btn) => {
+      const swrVal = parseFloat(btn.getAttribute('data-swr') || '');
+      if (Math.abs(swrVal - state.swr) < 0.05) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Initialize
+  loadInitialState();
+  attachEventListeners();
+  runCalculations();
+</script>
+
+<style>
+  .calculator-section {
+    padding: 24px 0 64px;
+  }
+
+  /* Preset Bar */
+  .presets-container {
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .presets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .presets-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .currency-picker-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .currency-select {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .currency-select:hover, .currency-select:focus {
+    border-color: var(--accent-fire);
+  }
+
+  .presets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .preset-pill {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .preset-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+  }
+
+  .preset-pill.active {
+    background: rgba(249, 115, 22, 0.15);
+    border-color: rgba(249, 115, 22, 0.4);
+    color: #fed7aa;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.2);
+  }
+
+  /* Layout Grid */
+  .calculator-layout {
+    display: grid;
+    grid-template-columns: 390px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* Left Inputs Card */
+  .inputs-card {
+    padding: 24px;
+    border-radius: var(--radius-lg);
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: var(--border-highlight);
+  }
+
+  .inputs-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .input-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .input-label {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .unit-badge {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #fed7aa;
+    background: rgba(249, 115, 22, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .highlight-val {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent-fire);
+  }
+
+  .input-with-symbol {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .currency-symbol-addon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+
+  .input-with-addon {
+    padding-left: 32px;
+  }
+
+  .input-helper {
+    font-size: 0.7125rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  .range-and-number {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .input-compact {
+    width: 80px;
+    padding: 6px 8px;
+    text-align: right;
+    font-size: 0.875rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .swr-chips {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .swr-chip {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.725rem;
+    font-weight: 500;
+    padding: 4px 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .swr-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+  }
+
+  .swr-chip.active {
+    background: rgba(249, 115, 22, 0.15);
+    border-color: rgba(249, 115, 22, 0.4);
+    color: #fed7aa;
+  }
+
+  /* Right Results Column */
+  .results-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Status Banner */
+  .status-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    transition: all 0.25s ease;
+  }
+
+  .banner-sustainable {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 78, 59, 0.2) 100%);
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+
+  .banner-solvent {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(120, 53, 15, 0.2) 100%);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+
+  .banner-depleted {
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, rgba(136, 19, 55, 0.2) 100%);
+    border-color: rgba(244, 63, 94, 0.3);
+  }
+
+  .status-indicator-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .status-icon {
+    font-size: 1.5rem;
+  }
+
+  .status-meta {
+    flex: 1;
+  }
+
+  .status-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+  }
+
+  .status-desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .status-badge {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .metric-card {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(16, 22, 34, 0.65);
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .metric-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 2px 0;
+  }
+
+  .metric-value {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin: 4px 0 2px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+  }
+
+  .progress-success {
+    background: linear-gradient(90deg, #10b981, #34d399);
+  }
+
+  .metric-subtext {
+    font-size: 0.725rem;
+    color: var(--text-muted);
+  }
+
+  .text-emerald {
+    color: var(--accent-emerald) !important;
+  }
+
+  .text-rose {
+    color: var(--accent-rose) !important;
+  }
+
+  /* Tabs Bar */
+  .tabs-nav-bar {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tabs-list {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .tab-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .tab-btn.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Tab Panels */
+  .tab-panel {
+    display: none;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .tab-panel.active {
+    display: block;
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  /* Chart Panel */
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 0.8125rem;
+  }
+
+  .chart-legends {
+    display: flex;
+    gap: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+  }
+
+  .legend-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-portfolio {
+    background: #f97316;
+    box-shadow: 0 0 6px rgba(249, 115, 22, 0.6);
+  }
+
+  .dot-expenses {
+    background: #f43f5e;
+  }
+
+  .chart-scrub-info {
+    color: var(--text-muted);
+  }
+
+  .chart-canvas-wrap {
+    width: 100%;
+    height: 340px;
+    position: relative;
+  }
+
+  #fire-chart {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: crosshair;
+  }
+
+  /* Milestones Grid */
+  .milestones-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .milestone-box {
+    padding: 18px;
+    background: rgba(14, 19, 30, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .milestone-box.active-target {
+    border-color: rgba(249, 115, 22, 0.4);
+    background: rgba(249, 115, 22, 0.05);
+  }
+
+  .milestone-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .milestone-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .milestone-corpus {
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+
+  .milestone-desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* Table View */
+  .table-container {
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  .results-table th {
+    position: sticky;
+    top: 0;
+    background: #111827;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    z-index: 2;
+  }
+
+  .results-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+  }
+
+  .results-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .row-depleted {
+    background: rgba(244, 63, 94, 0.06);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1e293b;
+    color: #ffffff;
+    border: 1px solid var(--accent-fire);
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .calculator-layout {
+      grid-template-columns: 1fr;
+    }
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+    .milestones-grid {
+      grid-template-columns: 1fr;
+    }
+    .status-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .btn-text {
+      display: none;
+    }
+  }
+</style>

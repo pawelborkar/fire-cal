@@ -1,0 +1,158 @@
+---
+---
+
+<section class="hero-section">
+  <div class="container hero-inner">
+    <div class="hero-badge-wrap">
+      <span class="badge-pill badge-fire">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2c1.5 3 4.5 5 4.5 9a5 5 0 0 1-10 0c0-2 .5-3.5 2-5 0 2 1 3 2 3 .5-1.5 1-4.5 1.5-7z"/>
+        </svg>
+        <span>Financial Independence, Retire Early</span>
+      </span>
+      <span class="badge-pill badge-success">
+        <span>No Sign-Up • 100% Client-Side</span>
+      </span>
+    </div>
+
+    <h1 class="hero-title font-display">
+      Calculate Your Path to <br />
+      <span class="text-gradient">Financial Independence</span>
+    </h1>
+
+    <p class="hero-description">
+      Forecast your retirement corpus with inflation adjustments, compound returns, safe withdrawal rates (SWR), and multi-currency support. Explore Lean, Standard, and Fat FIRE milestones instantly.
+    </p>
+
+    <div class="hero-highlights">
+      <div class="highlight-item">
+        <span class="highlight-icon">🛡️</span>
+        <div class="highlight-meta">
+          <strong>100% Private</strong>
+          <span>Data never leaves device</span>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">📈</span>
+        <div class="highlight-meta">
+          <strong>Inflation-Adjusted</strong>
+          <span>Real purchasing power compounding</span>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">🇮🇳 🌐</span>
+        <div class="highlight-meta">
+          <strong>Multi-Currency</strong>
+          <span>INR Lakhs/Crores, USD, EUR, GBP</span>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">⚡</span>
+        <div class="highlight-meta">
+          <strong>Instant & Reactive</strong>
+          <span>Visual chart & compounding table</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding: 48px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    color: #ffffff;
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .hero-highlights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(18, 24, 38, 0.55);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    text-align: left;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .highlight-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-highlight);
+    background: rgba(24, 32, 50, 0.7);
+  }
+
+  .highlight-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .highlight-meta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .highlight-meta strong {
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+  }
+
+  .highlight-meta span {
+    font-size: 0.7125rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .hero-highlights {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-highlights {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

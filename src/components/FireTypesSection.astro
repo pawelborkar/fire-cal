@@ -1,0 +1,221 @@
+---
+const FIRE_TYPES = [
+  {
+    title: 'Lean FIRE',
+    badge: 'Frugal & Minimalist',
+    badgeClass: 'badge-pill',
+    targetMultiplier: '18x – 20x annual expenses',
+    description: 'Designed for minimalists who prioritize freedom over luxury. Covers bare-bone essential living expenses (housing, food, healthcare, utilities) with virtually zero discretionary spending.',
+    idealFor: 'Solo individuals, digital nomads, and ardent minimalists willing to live frugally.',
+    icon: '🌱',
+  },
+  {
+    title: 'Standard FIRE',
+    badge: 'The Classic 4% Rule',
+    badgeClass: 'badge-pill badge-fire',
+    targetMultiplier: '25x – 33x annual expenses',
+    description: 'The golden benchmark established by the Trinity Study. Aims to replicate 100% of your current standard of living in retirement, allowing consistent discretionary spending, travel, and hobbies.',
+    idealFor: 'Professionals and families wanting full financial independence without sacrificing everyday comforts.',
+    icon: '🔥',
+  },
+  {
+    title: 'Fat FIRE',
+    badge: 'Abundant Luxury',
+    badgeClass: 'badge-pill badge-warning',
+    targetMultiplier: '35x – 50x annual expenses',
+    description: 'Targeted at an upscale retirement lifestyle without financial compromises. Accommodates world travel, premium healthcare, family gifting, luxury amenities, and large safety buffers.',
+    idealFor: 'High earners who enjoy premium lifestyle choices and refuse to budget strictly in retirement.',
+    icon: '💎',
+  },
+  {
+    title: 'Coast FIRE',
+    badge: 'Compound Growth Focus',
+    badgeClass: 'badge-pill badge-success',
+    targetMultiplier: 'Invest heavily early on',
+    description: 'You save and invest aggressively early in your career until compound growth alone will swell the portfolio to your full FIRE number by traditional retirement age, without adding another rupee/dollar.',
+    idealFor: 'Young professionals in their 20s or 30s who want to downshift careers or transition to lower-stress passion jobs.',
+    icon: '🏄‍♂️',
+  },
+  {
+    title: 'Barista FIRE',
+    badge: 'Semi-Retired Balance',
+    badgeClass: 'badge-pill',
+    targetMultiplier: '12x – 15x annual expenses',
+    description: 'A hybrid semi-retirement model where your invested portfolio covers 50% to 70% of living costs, while enjoyable part-time, freelancing, or low-stress work covers the remainder and provides insurance.',
+    idealFor: 'Anyone seeking an early escape from the 9-to-5 grind who enjoys remaining productively engaged.',
+    icon: '☕',
+  },
+];
+---
+
+<section id="fire-types" class="fire-types-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="badge-pill badge-fire">FIRE Methodologies</span>
+      <h2 class="section-title font-display">Which FIRE Archetype Fits Your Goals?</h2>
+      <p class="section-desc">
+        Financial Independence is not one-size-fits-all. Discover the variations of the FIRE movement and choose the target corpus that aligns with your lifestyle ambitions.
+      </p>
+    </div>
+
+    <div class="fire-types-grid">
+      {FIRE_TYPES.map((type) => (
+        <div class="type-card glass-panel">
+          <div class="type-header">
+            <span class="type-icon" aria-hidden="true">{type.icon}</span>
+            <div class="type-meta">
+              <h3 class="type-name font-display">{type.title}</h3>
+              <span class={type.badgeClass}>{type.badge}</span>
+            </div>
+          </div>
+
+          <div class="type-target-wrap">
+            <span class="type-target-label">Target Corpus:</span>
+            <strong class="type-target-val">{type.targetMultiplier}</strong>
+          </div>
+
+          <p class="type-desc">{type.description}</p>
+
+          <div class="type-footer">
+            <span class="type-footer-label">Best suited for:</span>
+            <span class="type-footer-text">{type.idealFor}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .fire-types-section {
+    padding: 64px 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .section-header {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .fire-types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .type-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: rgba(16, 22, 34, 0.6);
+  }
+
+  .type-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .type-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .type-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .type-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .type-target-wrap {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .type-target-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .type-target-val {
+    font-size: 0.8125rem;
+    color: var(--accent-fire);
+    font-weight: 700;
+  }
+
+  .type-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  .type-footer {
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .type-footer-label {
+    font-size: 0.7125rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .type-footer-text {
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 1024px) {
+    .fire-types-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .fire-types-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

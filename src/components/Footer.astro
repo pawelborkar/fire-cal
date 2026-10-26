@@ -1,0 +1,236 @@
+---
+import { SITE_METADATA } from '../lib/seo';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="flame-mini-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+            </svg>
+          </div>
+          <span class="font-display footer-logo-text">FIRE<span class="text-orange">Cal</span></span>
+        </a>
+        <p class="footer-tagline">
+          Free, local-first Financial Independence Retire Early calculator. Fast, private, and zero advertisements.
+        </p>
+        <div class="privacy-callout">
+          <span class="shield-icon">🛡️</span>
+          <span>100% Client-Side. No telemetry, cookies, or remote server logging.</span>
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <span class="footer-col-title font-display">Navigation</span>
+        <ul class="footer-nav-list">
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="#visualizer">Trajectory Visualizer</a></li>
+          <li><a href="#fire-types">FIRE Archetypes</a></li>
+          <li><a href="#guide">Retirement Guide</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <span class="footer-col-title font-display">Projects & Ecosystem</span>
+        <ul class="footer-nav-list">
+          <li>
+            <a href="https://pomodoro.in" target="_blank" rel="noopener noreferrer">
+              Pomodoro.in <span class="arrow-ext">↗</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://pawel.in" target="_blank" rel="noopener noreferrer">
+              Pawel Borkar <span class="arrow-ext">↗</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_METADATA.githubUrl} target="_blank" rel="noopener noreferrer">
+              GitHub Repository <span class="arrow-ext">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <strong>Disclaimer:</strong> This calculator is provided free for educational and simulation purposes only. It does not constitute certified financial, tax, or investment advice. Actual market returns, inflation rates, and asset performance will fluctuate over time. Always consult a qualified, fee-only financial planner before making life-altering retirement decisions.
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright-text">
+        © {currentYear} FIRE Calculator. Built with precision by <a href="https://pawel.in" target="_blank" rel="noopener noreferrer" class="author-link">Pawel Borkar</a>.
+      </p>
+      <div class="footer-badges">
+        <span class="badge-pill">Astro 5+</span>
+        <span class="badge-pill">Local-First</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #07090e;
+    border-top: 1px solid var(--border-subtle);
+    padding: 60px 0 36px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 380px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .flame-mini-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: rgba(249, 115, 22, 0.2);
+    border: 1px solid rgba(249, 115, 22, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-fire);
+  }
+
+  .footer-logo-text {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .text-orange {
+    color: var(--accent-fire);
+  }
+
+  .footer-tagline {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .privacy-callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.775rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .footer-col-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .footer-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-nav-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.825rem;
+    transition: color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .footer-nav-list a:hover {
+    color: #ffffff;
+  }
+
+  .arrow-ext {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .footer-disclaimer {
+    padding: 16px 20px;
+    background: rgba(14, 19, 30, 0.5);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .footer-disclaimer strong {
+    color: var(--text-secondary);
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.8125rem;
+  }
+
+  .author-link {
+    color: #fed7aa;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s ease;
+  }
+
+  .author-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .footer-badges {
+    display: flex;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+</style>

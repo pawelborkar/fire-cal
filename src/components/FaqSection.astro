@@ -1,0 +1,131 @@
+---
+import { FAQ_ITEMS } from '../lib/seo';
+---
+
+<section id="faq" class="faq-section">
+  <div class="container">
+    <div class="faq-header text-center">
+      <span class="badge-pill badge-fire">Common Inquiries</span>
+      <h2 class="faq-title font-display">Frequently Asked Questions</h2>
+      <p class="faq-desc">
+        Got questions about calculating your retirement corpus or inflation compounding? Find answers to the most common FIRE planning questions below.
+      </p>
+    </div>
+
+    <div class="faq-accordion-list">
+      {FAQ_ITEMS.map((item, idx) => (
+        <details class="faq-item glass-panel" open={idx === 0}>
+          <summary class="faq-summary">
+            <span class="faq-question font-display">{item.question}</span>
+            <span class="faq-chevron" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .faq-header {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .faq-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .faq-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .faq-accordion-list {
+    max-width: 840px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-item {
+    border-radius: var(--radius-md);
+    background: rgba(16, 22, 34, 0.65);
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .faq-item[open] {
+    border-color: rgba(249, 115, 22, 0.35);
+    background: rgba(20, 28, 44, 0.85);
+  }
+
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    gap: 16px;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .faq-chevron {
+    color: var(--text-muted);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--accent-fire);
+  }
+
+  .faq-answer {
+    padding: 0 22px 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+</style>

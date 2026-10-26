@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+import { SITE_METADATA, getStructuredData } from '../lib/seo';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = SITE_METADATA.title,
+  description = SITE_METADATA.description,
+  canonicalUrl = SITE_METADATA.url,
+} = Astro.props;
+
+const structuredData = getStructuredData();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Metadata -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={SITE_METADATA.keywords.join(', ')} />
+    <meta name="author" content={SITE_METADATA.author} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${SITE_METADATA.url}/fire.png`} />
+    <meta property="og:site_name" content="FIRE Calculator" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={`${SITE_METADATA.url}/fire.png`} />
+    <meta name="twitter:creator" content="@pawelborkar" />
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" href="/fire.png" />
+    <link rel="apple-touch-icon" href="/fire.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#f97316" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- JSON-LD Structured Data for Search Engines -->
+    {structuredData.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
