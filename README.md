@@ -2,7 +2,7 @@
 
 > A free, local-first Financial Independence Retire Early (FIRE) calculator built with **Astro**, inspired by the zen, minimalist design language of [Pomodoro.in](https://pomodoro.in).
 
-Live at: **[fire.pawel.in](https://fire.pawel.in)**
+Live at: **[pawel.in/fire-calculator](https://pawel.in/fire-calculator)**
 
 ---
 

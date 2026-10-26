@@ -3,7 +3,7 @@ export const SITE_METADATA = {
   shortTitle: 'FIRE Calculator',
   tagline: 'Calculate your FIRE number, portfolio longevity, and safe withdrawal path',
   description: 'Free, local-first Financial Independence Retire Early (FIRE) calculator. Calculate your FIRE corpus (25x-33x rule), safe withdrawal rate, inflation-adjusted portfolio trajectory, and Lean/Fat/Coast FIRE milestones with zero sign-ups or ads.',
-  url: 'https://fire.pawel.in',
+  url: 'https://pawel.in/fire-calculator',
   author: 'Pawel Borkar',
   authorUrl: 'https://pawel.in',
   githubUrl: 'https://github.com/pawelborkar/fire-cal',

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fire.pawel.in/sitemap-index.xml
+Sitemap: https://pawel.in/fire-calculator/sitemap-index.xml

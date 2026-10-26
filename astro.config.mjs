@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://fire.pawel.in',
+  site: 'https://pawel.in',
+  base: '/fire-calculator',
   integrations: [sitemap()],
   output: 'static',
   build: {
