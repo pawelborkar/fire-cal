@@ -1,6 +1,6 @@
 # 🔥 FIRE Calculator
 
-> A free, local-first Financial Independence Retire Early (FIRE) calculator built with **Astro**, inspired by the zen, minimalist design language of [Pomodoro.in](https://pomodoro.in).
+> A free, private Financial Independence Retire Early (FIRE) calculator built with **Astro**, inspired by the zen, minimalist design language of [Pomodoro.in](https://pomodoro.in).
 
 Live at: **[fire.pawel.in](https://fire.pawel.in)**
 
@@ -8,7 +8,7 @@ Live at: **[fire.pawel.in](https://fire.pawel.in)**
 
 ## ✨ Features
 
-- **🛡️ 100% Local-First & Private**: Zero data leaves your device. All inflation compounding, ROI simulation, and milestone calculations execute client-side in the browser.
+- **🛡️ 100% Private & Client-Side**: Zero data leaves your device. All inflation compounding, ROI simulation, and milestone calculations execute directly in your browser without tracking.
 - **📈 Real Inflation Compounding**: Annual living expenses dynamically compound with inflation, avoiding static estimation pitfalls.
 - **🎨 Pomodoro.in Design Language**: Clean dark aesthetic, glassmorphic cards, radiant fire-orange accents, smooth micro-interactions, and custom-styled sliders.
 - **📊 Interactive Trajectory Chart**: Interactive canvas-based area chart showing portfolio longevity vs inflation-adjusted expenses with live hover scrub inspector.
@@ -90,4 +90,4 @@ pnpm deploy
 ## 👨‍💻 Author
 
 Crafted by **[Pawel Borkar](https://pawel.in)**  
-Companion project: **[Pomodoro.in](https://pomodoro.in)** (A local-first aesthetic timer)
+Companion project: **[Pomodoro.in](https://pomodoro.in)** (An aesthetic minimalist focus timer)

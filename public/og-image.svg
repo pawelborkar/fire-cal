@@ -1,0 +1,92 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#f97316" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#090c13" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="60%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#090c13"/>
+  <rect width="1200" height="630" fill="url(#bgGlow)"/>
+
+  <!-- Subtle Grid Lines -->
+  <line x1="100" y1="0" x2="100" y2="630" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="630" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="900" y1="0" x2="900" y2="630" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="1100" y1="0" x2="1100" y2="630" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="150" x2="1200" y2="150" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="480" x2="1200" y2="480" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+  <!-- Central Card -->
+  <rect x="80" y="60" width="1040" height="510" rx="24" fill="rgba(16, 22, 34, 0.75)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" filter="url(#cardShadow)"/>
+
+  <!-- Flame Icon & Branding -->
+  <g transform="translate(140, 115)">
+    <!-- Flame SVG -->
+    <path d="M28 50 C28 50, 42 43, 42 32 C42 24, 38 21, 35 15 C38 18, 48 24, 48 35 C48 48, 36 58, 24 58 C12 58, 4 48, 4 36 C4 27, 10 18, 16 11 C15 17, 18 24, 23 26 C23 26, 20 18, 24 8 C27 4, 32 0, 32 0 C32 0, 30 9, 34 16 C37 21, 46 25, 46 35 C46 45, 38 50, 28 50 Z" fill="url(#flameGrad)" transform="scale(1.3)"/>
+    <text x="80" y="52" fill="#ffffff" font-size="44" font-weight="800" font-family="-apple-system, BlinkMacSystemFont, Outfit, Inter, sans-serif">FIRE<tspan fill="#f97316">Cal</tspan></text>
+  </g>
+
+  <!-- Badges Top Right -->
+  <g transform="translate(860, 130)">
+    <rect x="0" y="0" width="180" height="38" rx="19" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.4)" stroke-width="1"/>
+    <text x="90" y="24" fill="#fdba74" font-size="16" font-weight="700" font-family="-apple-system, sans-serif" text-anchor="middle">100% Free &amp; Private</text>
+  </g>
+
+  <!-- Hero Headings inside Card -->
+  <text x="140" y="270" fill="url(#textGrad)" font-size="54" font-weight="800" font-family="-apple-system, BlinkMacSystemFont, Outfit, Inter, sans-serif" letter-spacing="-1">
+    Early Retirement &amp; 4% Rule Calculator
+  </text>
+  
+  <text x="140" y="325" fill="#94a3b8" font-size="24" font-family="-apple-system, BlinkMacSystemFont, Inter, sans-serif" font-weight="400">
+    Calculate your retirement corpus, compounding inflation, and Lean / Fat / Coast FIRE targets.
+  </text>
+
+  <!-- Feature Metric Pills -->
+  <g transform="translate(140, 385)">
+    <!-- Pill 1 -->
+    <rect x="0" y="0" width="220" height="74" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="24" y="32" fill="#f8fafc" font-size="18" font-weight="700" font-family="-apple-system, sans-serif">4% &amp; 3.3% SWR</text>
+    <text x="24" y="54" fill="#64748b" font-size="14" font-family="-apple-system, sans-serif">Trinity Study models</text>
+
+    <!-- Pill 2 -->
+    <rect x="240" y="0" width="220" height="74" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="264" y="32" fill="#f8fafc" font-size="18" font-weight="700" font-family="-apple-system, sans-serif">₹ Lakhs &amp; Crores</text>
+    <text x="264" y="54" fill="#64748b" font-size="14" font-family="-apple-system, sans-serif">Plus USD, EUR, GBP</text>
+
+    <!-- Pill 3 -->
+    <rect x="480" y="0" width="220" height="74" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="504" y="32" fill="#f8fafc" font-size="18" font-weight="700" font-family="-apple-system, sans-serif">Real Inflation</text>
+    <text x="504" y="54" fill="#64748b" font-size="14" font-family="-apple-system, sans-serif">Compounding expenses</text>
+
+    <!-- Pill 4 -->
+    <rect x="720" y="0" width="200" height="74" rx="14" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" stroke-width="1"/>
+    <text x="744" y="32" fill="#fdba74" font-size="18" font-weight="700" font-family="-apple-system, sans-serif">5 Milestones</text>
+    <text x="744" y="54" fill="#f97316" font-size="14" font-family="-apple-system, sans-serif">Lean, Fat, Coast FIRE</text>
+  </g>
+
+  <!-- Footer link at bottom of card -->
+  <text x="140" y="515" fill="#f97316" font-size="20" font-weight="600" font-family="-apple-system, sans-serif">
+    fire.pawel.in
+  </text>
+  <text x="270" y="515" fill="#64748b" font-size="18" font-family="-apple-system, sans-serif">
+    • Free client-side simulation • No sign-up required
+  </text>
+</svg>

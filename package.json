@@ -2,7 +2,7 @@
   "name": "fire-cal",
   "private": true,
   "version": "1.0.0",
-  "description": "Financial Independence Retire Early (FIRE) Calculator — Free, local-first, inflation-adjusted retirement planning",
+  "description": "Financial Independence Retire Early (FIRE) Calculator — Free, inflation-adjusted retirement planning",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
