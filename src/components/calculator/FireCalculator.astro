@@ -1,8 +1,39 @@
 ---
 import { PRESETS, CURRENCIES } from '../../lib/formatters';
+import type { CurrencyCode } from '../../lib/types';
+
+interface Props {
+  initialCurrency?: CurrencyCode;
+  initialPrincipal?: number;
+  initialExpenses?: number;
+  initialRoi?: number;
+  initialInflation?: number;
+  initialYears?: number;
+  initialSwr?: number;
+}
+
+const {
+  initialCurrency,
+  initialPrincipal,
+  initialExpenses,
+  initialRoi,
+  initialInflation,
+  initialYears,
+  initialSwr,
+} = Astro.props;
 ---
 
-<section id="calculator" class="calculator-section">
+<section
+  id="calculator"
+  class="calculator-section"
+  data-init-currency={initialCurrency}
+  data-init-principal={initialPrincipal}
+  data-init-expenses={initialExpenses}
+  data-init-roi={initialRoi}
+  data-init-inflation={initialInflation}
+  data-init-years={initialYears}
+  data-init-swr={initialSwr}
+>
   <div class="container">
     <!-- Preset Shortcuts Bar -->
     <div class="presets-container glass-panel">
@@ -548,9 +579,22 @@ import { PRESETS, CURRENCIES } from '../../lib/formatters';
 
   let currentProjections: any[] = [];
 
-  // Parse state from URL params if present
+  // Parse state from URL params or component dataset props
   function loadInitialState() {
     try {
+      const container = document.getElementById('calculator');
+      const hasDataset = container?.dataset.initCurrency || container?.dataset.initPrincipal || container?.dataset.initExpenses;
+
+      if (container?.dataset.initCurrency && CURRENCIES[container.dataset.initCurrency as CurrencyCode]) {
+        state.currency = container.dataset.initCurrency as CurrencyCode;
+      }
+      if (container?.dataset.initPrincipal) state.principal = Math.max(0, parseFloat(container.dataset.initPrincipal) || state.principal);
+      if (container?.dataset.initExpenses) state.expenses = Math.max(0, parseFloat(container.dataset.initExpenses) || state.expenses);
+      if (container?.dataset.initRoi) state.roi = Math.max(0, parseFloat(container.dataset.initRoi) || state.roi);
+      if (container?.dataset.initInflation) state.inflation = Math.max(0, parseFloat(container.dataset.initInflation) || state.inflation);
+      if (container?.dataset.initYears) state.years = Math.max(1, parseInt(container.dataset.initYears, 10) || state.years);
+      if (container?.dataset.initSwr) state.swr = Math.max(1, parseFloat(container.dataset.initSwr) || state.swr);
+
       const params = new URLSearchParams(window.location.search);
       if (params.has('p')) state.principal = Math.max(0, parseFloat(params.get('p')!) || state.principal);
       if (params.has('e')) state.expenses = Math.max(0, parseFloat(params.get('e')!) || state.expenses);
@@ -560,8 +604,8 @@ import { PRESETS, CURRENCIES } from '../../lib/formatters';
       if (params.has('swr')) state.swr = Math.max(1, parseFloat(params.get('swr')!) || state.swr);
       if (params.has('c') && CURRENCIES[params.get('c') as CurrencyCode]) {
         state.currency = params.get('c') as CurrencyCode;
-      } else {
-        // Fallback to localStorage if available
+      } else if (!hasDataset) {
+        // Fallback to localStorage if available (only on default root calculator)
         const saved = localStorage.getItem('fire_cal_state');
         if (saved) {
           const parsed = JSON.parse(saved);

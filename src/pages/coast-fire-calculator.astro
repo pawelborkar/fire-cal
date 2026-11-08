@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import FireCalculator from '../components/calculator/FireCalculator.astro';
+import FireTypesSection from '../components/FireTypesSection.astro';
+import SeoGuide from '../components/SeoGuide.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Coast FIRE Calculator — Compound Growth Early Retirement Tool";
+const pageDescription = "Calculate your Coast FIRE milestone. Find out how much you need invested in your 20s or 30s so compound interest carries you to financial independence without additional savings.";
+const pageCanonical = "https://fire.pawel.in/coast-fire-calculator/";
+---
+
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={pageCanonical}>
+  <Header />
+  <main id="main-content">
+    <section class="hero-section">
+      <div class="container hero-inner">
+        <div class="hero-badge-wrap">
+          <span class="badge-pill badge-success">
+            <span>🏄‍♂️ Coast FIRE Milestone</span>
+          </span>
+          <span class="badge-pill badge-fire">
+            <span>Power of Compounding</span>
+          </span>
+        </div>
+
+        <h1 class="hero-title font-display">
+          Coast FIRE Calculator: <br />
+          <span class="text-gradient">Let Compound Growth Carry Your Retirement</span>
+        </h1>
+
+        <p class="hero-description">
+          Coast FIRE means saving and investing aggressively early on, until compound interest alone will grow your portfolio to your full retirement number by traditional age—freeing you to downshift careers, work part-time, or take career sabbaticals.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pre-configured for Coast FIRE parameters -->
+    <FireCalculator
+      initialCurrency="USD"
+      initialPrincipal={250000}
+      initialExpenses={60000}
+      initialRoi={8.5}
+      initialInflation={3.0}
+      initialYears={35}
+      initialSwr={4.0}
+    />
+
+    <FireTypesSection />
+    <SeoGuide />
+    <FaqSection />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 48px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    color: #ffffff;
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+</style>

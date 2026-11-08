@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import FireCalculator from '../components/calculator/FireCalculator.astro';
+import FireTypesSection from '../components/FireTypesSection.astro';
+import SeoGuide from '../components/SeoGuide.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "4% Rule Calculator — Safe Withdrawal Rate & Trinity Study Tool";
+const pageDescription = "Calculate your early retirement corpus using the 4% Rule and Trinity Study. Test 25x, 30x, and 33x safe withdrawal rates against inflation compounding and market volatility.";
+const pageCanonical = "https://fire.pawel.in/4-percent-rule-calculator/";
+---
+
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={pageCanonical}>
+  <Header />
+  <main id="main-content">
+    <section class="hero-section">
+      <div class="container hero-inner">
+        <div class="hero-badge-wrap">
+          <span class="badge-pill badge-fire">
+            <span>The 4% Rule &amp; Trinity Study</span>
+          </span>
+          <span class="badge-pill badge-success">
+            <span>25x to 33x Corpus Modeling</span>
+          </span>
+        </div>
+
+        <h1 class="hero-title font-display">
+          4% Rule Calculator: <br />
+          <span class="text-gradient">Safe Withdrawal Rates &amp; Portfolio Longevity</span>
+        </h1>
+
+        <p class="hero-description">
+          The 4% rule states that you can withdraw 4% of your initial portfolio in year one, adjusted for annual inflation thereafter, with a 95%+ historical probability of your money outliving a 30-year retirement. Test your numbers and explore safer 3.0%–3.5% withdrawal horizons.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pre-configured for Trinity Study 4% Rule parameters -->
+    <FireCalculator
+      initialCurrency="USD"
+      initialPrincipal={1500000}
+      initialExpenses={60000}
+      initialRoi={8.0}
+      initialInflation={3.0}
+      initialYears={30}
+      initialSwr={4.0}
+    />
+
+    <FireTypesSection />
+    <SeoGuide />
+    <FaqSection />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 48px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    color: #ffffff;
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+</style>

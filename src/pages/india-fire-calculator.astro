@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import FireCalculator from '../components/calculator/FireCalculator.astro';
+import FireTypesSection from '../components/FireTypesSection.astro';
+import SeoGuide from '../components/SeoGuide.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "FIRE Calculator India — Crore & Early Retirement Corpus Tool";
+const pageDescription = "Calculate your early retirement corpus in India with ₹ Lakhs and Crores formatting. Factor in 6% Indian inflation, 10.5% mutual fund returns, and conservative 30x–33x safe withdrawal rates.";
+const pageCanonical = "https://fire.pawel.in/india-fire-calculator/";
+---
+
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={pageCanonical}>
+  <Header />
+  <main id="main-content">
+    <section class="hero-section">
+      <div class="container hero-inner">
+        <div class="hero-badge-wrap">
+          <span class="badge-pill badge-fire">
+            <span>🇮🇳 India Early Retirement</span>
+          </span>
+          <span class="badge-pill badge-success">
+            <span>Lakhs &amp; Crores • 6% Inflation Ready</span>
+          </span>
+        </div>
+
+        <h1 class="hero-title font-display">
+          FIRE Calculator India: <br />
+          <span class="text-gradient">Retirement Corpus in Lakhs &amp; Crores</span>
+        </h1>
+
+        <p class="hero-description">
+          Designed specifically for Indian salaried professionals and NRIs. Simulate your financial independence corpus with realistic 6% inflation, domestic equity returns (Nifty 50), debt buffers (EPF/PPF), and a prudent 3.33% (30x) safe withdrawal rate.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pre-configured for Indian economic parameters -->
+    <FireCalculator
+      initialCurrency="INR"
+      initialPrincipal={50000000}
+      initialExpenses={1200000}
+      initialRoi={10.5}
+      initialInflation={6.0}
+      initialYears={40}
+      initialSwr={3.33}
+    />
+
+    <FireTypesSection />
+    <SeoGuide />
+    <FaqSection />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 48px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    color: #ffffff;
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+</style>

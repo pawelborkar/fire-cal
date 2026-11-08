@@ -79,6 +79,78 @@
           </ol>
         </div>
       </section>
+
+      <!-- Article Section 5: Worked Case Studies -->
+      <section class="guide-card glass-panel">
+        <div class="guide-card-icon">💼</div>
+        <h3 class="guide-card-title font-display">5. Real-World Worked Case Studies</h3>
+        <p>
+          Determining your target corpus depends on your home geography, annual baseline expenses, and safe withdrawal margin. Here is how the math applies in practice:
+        </p>
+        <div class="case-study-list">
+          <div class="case-item">
+            <div class="case-header">
+              <span class="case-flag">🇮🇳</span>
+              <strong>India FIRE (₹3.6 Crore Corpus)</strong>
+            </div>
+            <p>Annual living expenses: <strong>₹12 Lakhs/year</strong> (~₹1 Lakh/month). With 3.33% SWR (30x rule) and 6% inflation, target corpus = <strong>₹3.60 Crores</strong>. Allocation: 60% Equity index funds (Nifty 50) + 40% Safe debt (EPF/PPF/G-Sec).</p>
+          </div>
+          <div class="case-item">
+            <div class="case-header">
+              <span class="case-flag">🌐</span>
+              <strong>US / Global FIRE ($1.5M Corpus)</strong>
+            </div>
+            <p>Annual living expenses: <strong>$60,000/year</strong> (~$5,000/month). Using the classic 4% rule (25x rule) with 3% inflation, target corpus = <strong>$1,500,000</strong>. Allocation: 75% Total World Stock (VTI/VT) + 25% Aggregate Bonds (BND).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Article Section 6: SWR Comparison Matrix -->
+      <section class="guide-card glass-panel">
+        <div class="guide-card-icon">📊</div>
+        <h3 class="guide-card-title font-display">6. Safe Withdrawal Rate (SWR) Comparison Matrix</h3>
+        <p>
+          Selecting your withdrawal percentage determines your risk of portfolio depletion over extended multi-decade retirements:
+        </p>
+        <div class="swr-table-wrap">
+          <table class="swr-table">
+            <thead>
+              <tr>
+                <th>SWR</th>
+                <th>Multiplier</th>
+                <th>Horizon</th>
+                <th>Suggested Markets</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="swr-rate text-orange">4.00%</span></td>
+                <td><strong>25x</strong> expenses</td>
+                <td>30 Years</td>
+                <td>US / Developed economies</td>
+              </tr>
+              <tr>
+                <td><span class="swr-rate text-orange">3.50%</span></td>
+                <td><strong>28.5x</strong> expenses</td>
+                <td>35–40 Years</td>
+                <td>Global balanced portfolios</td>
+              </tr>
+              <tr>
+                <td><span class="swr-rate text-orange">3.33%</span></td>
+                <td><strong>30x</strong> expenses</td>
+                <td>40–50 Years</td>
+                <td>India &amp; Emerging markets</td>
+              </tr>
+              <tr>
+                <td><span class="swr-rate text-orange">3.00%</span></td>
+                <td><strong>33.3x</strong> expenses</td>
+                <td>50+ Years / Perpetual</td>
+                <td>Ultra-conservative / Fat FIRE</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   </div>
 </article>
@@ -213,6 +285,82 @@
 
   .strategy-list li {
     line-height: 1.5;
+  }
+
+  .case-study-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .case-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .case-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+
+  .case-flag {
+    font-size: 1.1rem;
+  }
+
+  .case-item p {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .swr-table-wrap {
+    overflow-x: auto;
+    margin-top: 6px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .swr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+    text-align: left;
+  }
+
+  .swr-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+  }
+
+  .swr-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .swr-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .swr-rate {
+    font-weight: 700;
+  }
+
+  .text-orange {
+    color: var(--accent-fire);
   }
 
   @media (max-width: 860px) {

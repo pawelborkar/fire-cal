@@ -11,7 +11,7 @@ interface Props {
 const {
   title = SITE_METADATA.title,
   description = SITE_METADATA.description,
-  canonicalUrl = SITE_METADATA.url,
+  canonicalUrl = `${SITE_METADATA.url}/`,
 } = Astro.props;
 
 const structuredData = getStructuredData();
