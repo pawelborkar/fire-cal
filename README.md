@@ -89,5 +89,5 @@ pnpm deploy
 
 ## 👨‍💻 Author
 
-Crafted by **[Pawel Borkar](https://pawel.in)**  
+Crafted by **[Pawel](https://pawelborkar.com)**  
 Companion project: **[Pomodoro.in](https://pomodoro.in)** (An aesthetic minimalist focus timer)

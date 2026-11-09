@@ -4,8 +4,8 @@ export const SITE_METADATA = {
   tagline: 'Calculate your FIRE number, portfolio longevity, and safe withdrawal path',
   description: 'Free, 100% private FIRE calculator. Calculate your early retirement corpus, 4% rule safe withdrawal rate, compounding inflation, and Lean/Fat/Coast milestones with zero ads.',
   url: 'https://fire.pawel.in',
-  author: 'Pawel Borkar',
-  authorUrl: 'https://pawel.in',
+  author: 'Pawel',
+  authorUrl: 'https://pawelborkar.com',
   githubUrl: 'https://github.com/pawelborkar/fire-cal',
   relatedAppUrl: 'https://pomodoro.in',
   keywords: [
