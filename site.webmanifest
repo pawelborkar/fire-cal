@@ -1,7 +1,7 @@
 {
   "name": "FIRE Calculator — Financial Independence Retire Early",
   "short_name": "FIRE Cal",
-  "description": "Free, local-first Financial Independence Retire Early (FIRE) calculator with inflation, compounding, and multi-currency support.",
+  "description": "Free, Financial Independence Retire Early (FIRE) calculator with inflation, compounding, and multi-currency support.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0d14",
